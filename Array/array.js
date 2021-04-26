@@ -30,13 +30,30 @@ class MyArray {
     return item;
   }
 
+  shift() {
+    return this.delete(0);
+  }
+
+  unshift(item) {
+    this.unshiftIndex(0);
+    this.data[0] = item;
+    return this.data;
+  }
+
+  unshiftIndex(index) {
+    for (let i = this.length; i > index; i--) {
+      this.data[i] = this.data[i - 1];
+    }
+    this.length++;
+  }
+
   shiftIndex(index) {
     for (let i = index; i < this.length - 1; i++) {
       this.data[i] = this.data[i + 1];
     }
-    delete this.data(this.length - 1);
+    delete this.data[this.length - 1];
     this.length--;
   }
 }
 
-const MyArray = new MyArray();
+const myArray = new MyArray();
