@@ -1,38 +1,17 @@
-// 1-- > 2-- > 3-- > 4-- > 5-- > null;
-
-// let singlyLinkedList = {
-//   head: {
-//     value: 1,
-//     next: {
-//       value: 2,
-//       next: {
-//         value: 3,
-//         next: {
-//           value: 4,
-//           next: {
-//             value: 5,
-//             next: {
-//               value: null,
-//             },
-//           },
-//         },
-//       },
-//     },
-//   },
-// };
-
 class Node {
   constructor(value) {
     this.value = value;
     this.next = null;
+    this.prev = null;
   }
 }
 
-class MySinglyListkedList {
+class MyDoublyLinkedList {
   constructor(value) {
     this.head = {
       value: value,
       next: null,
+      prev: null,
     };
 
     this.tail = this.head;
@@ -41,7 +20,7 @@ class MySinglyListkedList {
 
   append(value) {
     const newNode = new Node(value);
-
+    newNode.prev = this.tail;
     this.tail.next = newNode;
     this.tail = newNode;
     this.length++;
@@ -52,6 +31,7 @@ class MySinglyListkedList {
   prepend(value) {
     const newNode = new Node(value);
 
+    this.head.prev = newNode;
     newNode.next = this.head;
     this.head = newNode;
     this.length++;
@@ -69,6 +49,7 @@ class MySinglyListkedList {
     const holdingPointer = firstPointer.next;
     firstPointer.next = newNode;
     newNode.next = holdingPointer;
+    newNode.prev = firstPointer;
 
     this.length++;
     return this;
@@ -79,14 +60,17 @@ class MySinglyListkedList {
       console.error("index is out of limits of the array");
       return;
     }
-    if (index == 0) {
+    if (index == 1) {
+      this.head.next.prev = null;
       this.head = this.head.next;
       this.length--;
       return this;
     }
 
     const beforePointer = this.getTheIndex(index - 1);
+    const currentPointer = this.getTheIndex(index);
     const afterPointer = this.getTheIndex(index + 1);
+    afterPointer.prev = beforePointer;
     beforePointer.next = afterPointer;
 
     this.length--;
@@ -107,4 +91,4 @@ class MySinglyListkedList {
   }
 }
 
-let myLinkedList = new MySinglyListkedList(1);
+let myDoublyLinkedList = new MyDoublyLinkedList(1);
