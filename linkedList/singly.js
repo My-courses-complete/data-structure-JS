@@ -58,6 +58,53 @@ class MySinglyListkedList {
 
     return this;
   }
+
+  insert(index, value) {
+    if (inex >= this.length) {
+      return this.append(value);
+    }
+
+    const newNode = new Node(value);
+    const firstPointer = this.getTheIndex(index - 1);
+    const holdingPointer = firstPointer.next;
+    firstPointer.next = newNode;
+    newNode.next = holdingPointer;
+
+    this.length++;
+    return this;
+  }
+
+  remove(index) {
+    if (index >= this.length) {
+      console.error("index is out of limits of the array");
+      return;
+    }
+    if (index == 0) {
+      this.head = this.head.next;
+      this.length--;
+      return this;
+    }
+
+    const beforePointer = this.getTheIndex(index - 2);
+    const afterPointer = this.getTheIndex(index);
+    beforePointer.next = afterPointer;
+
+    this.length--;
+
+    return this;
+  }
+
+  getTheIndex(index) {
+    let counter = 0;
+    let currentNode = this.head;
+
+    while (counter !== index) {
+      currentNode = currentNode.next;
+      counter++;
+    }
+
+    return currentNode;
+  }
 }
 
 let myLinkedList = new MySinglyListkedList(1);
